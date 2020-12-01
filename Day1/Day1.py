@@ -1,6 +1,7 @@
 from itertools import permutations
 import time
 
+
 puzzleInput = [1844,
                1123,
                1490,
