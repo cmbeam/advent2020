@@ -198,11 +198,23 @@ puzzleInput = [1844,
                1463,
                1776,
                1406]
-answer = 0
+answer1 = 0
 for x in range(0, len(puzzleInput)):
     for y in range(x+1, len(puzzleInput)):
         sum = puzzleInput[x] + puzzleInput[y]
         if sum == 2020:
-            answer = puzzleInput[x] * puzzleInput[y]
+            answer1 = puzzleInput[x] * puzzleInput[y]
 
-print(answer)
+print(answer1)
+
+# Part 2
+answer2 = 0
+for x in range(0, len(puzzleInput)):
+    for y in range(x+1, len(puzzleInput)):
+        for z in range(0, len(puzzleInput)):
+            if z != x & z != y:
+                sum = puzzleInput[x] + puzzleInput[y] + puzzleInput[z]
+                if sum == 2020:
+                    answer2 = puzzleInput[x] * puzzleInput[y] * puzzleInput[z]
+
+print(answer2)
