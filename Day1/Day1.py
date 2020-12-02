@@ -1,4 +1,4 @@
-from itertools import permutations
+from itertools import combinations
 import time
 
 puzzleInput = []
@@ -10,7 +10,7 @@ for entry in file:
 answer1 = 0
 
 start = time.perf_counter()
-perm = permutations(puzzleInput, 2)
+perm = combinations(puzzleInput, 2)
 for i in list(perm):
     sum = i[0] + i[1]
     if sum == 2020:
@@ -35,7 +35,7 @@ print(f"Time: {stop - start:0.4f}")
 answer2 = 0
 
 start = time.perf_counter()
-perm = permutations(puzzleInput, 3)
+perm = combinations(puzzleInput, 3)
 for i in list(perm):
     sum = i[0] + i[1] + i[2]
     if sum == 2020:
