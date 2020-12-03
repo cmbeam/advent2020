@@ -1,20 +1,15 @@
 # Load file
 def loadpuzzle(file):
     grid = [[0 for i in range(31)] for j in range(323)]
-    puzzle = open(file, 'r')
-    y = 0
-    for line in puzzle:
-        x = 0
-        for obstacle in line:
-            if obstacle != '\n':
+    with open(file) as puzzle:
+        for y, line in enumerate(puzzle):
+            line = line.strip('\n')
+            for x, obstacle in enumerate(line):
                 grid[y][x] = obstacle
-            x = x + 1
-        y = y + 1
-    # print(grid)
     return grid
 
 
-def traversegrid(grid, slopeX, slopeY):
+def traverse(grid, slopeX, slopeY):
     treecount = 0
     x = slopeX
     y = slopeY
@@ -29,13 +24,14 @@ def traversegrid(grid, slopeX, slopeY):
     return treecount
 
 
+# Load file
 file = 'Day3/day3.txt'
 grid = loadpuzzle(file)
 
 # part 1
-print(traversegrid(grid, 3, 1))
+print(traverse(grid, 3, 1))
 
 # part 2
-answer = traversegrid(grid, 1, 1) * traversegrid(grid, 3, 1) * traversegrid(grid, 5, 1) *\
-         traversegrid(grid, 7,1) * traversegrid(grid, 1, 2)
+answer = traverse(grid, 1, 1) * traverse(grid, 3, 1) * traverse(grid, 5, 1) *\
+         traverse(grid, 7,1) * traverse(grid, 1, 2)
 print(answer)
