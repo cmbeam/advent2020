@@ -17,7 +17,7 @@ def loadpuzzle(file):
 
 
 
-def traverseGrid(grid, slopeX, slopeY):
+def traversegrid(grid, slopeX, slopeY):
     treeCount = 0
     x = slopeX
     y = slopeY
@@ -39,4 +39,9 @@ def traverseGrid(grid, slopeX, slopeY):
 file = 'Day3/day3.txt'
 grid = loadpuzzle(file)
 
-print(traverseGrid(grid, 3, 1))
+# part 1
+print(traversegrid(grid, 3, 1))
+
+# part 2
+answer = traversegrid(grid, 1, 1) * traversegrid(grid, 3, 1) * traversegrid(grid, 5, 1) * traversegrid(grid, 7, 1) * traversegrid(grid, 1, 2)
+print(answer)
