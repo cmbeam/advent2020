@@ -1,7 +1,7 @@
 import re
 
 # Load file
-def loadpassport(file):
+def validate(file, strict):
     count = 0
     with open(file) as file:
         person = 0
@@ -52,10 +52,11 @@ def loadpassport(file):
                         valid = 1
                     if re.match('[0-9]{10}', passport['pid']):
                         valid = 1
-                    if valid == 0:
+                    if strict == True and valid == 0:
                         count = count + 1
-                        print(str(passport['byr']) + "    " + str(passport['iyr'] )+ "    " + str(passport['eyr'])+ "    " + str(passport['pid']) + "    " + str(passport['hcl'])+ "    " + str(passport['ecl'])+ "    " + str(passport['hgt']))
-
+                        # print(str(passport['byr']) + "    " + str(passport['iyr'] )+ "    " + str(passport['eyr'])+ "    " + str(passport['pid']) + "    " + str(passport['hcl'])+ "    " + str(passport['ecl'])+ "    " + str(passport['hgt']))
+                    if not strict:
+                        count = count + 1
                 passport = {}
 
                 person = person + 1
@@ -75,5 +76,10 @@ def loadpassport(file):
 
 # Load file
 file = 'Day4/day4.txt'
-count = loadpassport(file)
+# Part 1
+count = validate(file, False)
+print(count)
+
+# Part 2
+count = validate(file, True)
 print(count)
