@@ -1,5 +1,6 @@
 import re
 
+
 # Load file
 def validate(file, strict):
     count = 0
@@ -10,23 +11,20 @@ def validate(file, strict):
 
             # line = fileline.strip('\n')
             if line == '\n':
-               # print(person)
+                # print(person)
 
                 if 'byr' in passport.keys() and 'iyr' in passport.keys() and 'eyr' in passport.keys() and 'hgt' in passport.keys() and 'hcl' in passport.keys() and 'ecl' in passport.keys() and 'pid' in passport.keys():
                     valid = 0
-
 
                     if int(passport['byr']) < 1920:
                         valid = 1
                     if int(passport['byr']) > 2002:
                         valid = 1
 
-
                     if int(passport['iyr']) < 2010:
                         valid = 1
                     if int(passport['iyr']) > 2020:
                         valid = 1
-
 
                     if int(passport['eyr']) < 2020:
                         valid = 1
@@ -40,9 +38,9 @@ def validate(file, strict):
                         if 193 > int(height) < 150:
                             valid = 1
                     if re.match('.*in', passport['hgt']):
-                            height = passport['hgt'].strip('in')
-                            if 76 > int(height) < 59:
-                                valid = 1
+                        height = passport['hgt'].strip('in')
+                        if 76 > int(height) < 59:
+                            valid = 1
 
                     if not re.match('#[0-9a-f]{6}', passport['hcl']):
                         valid = 1
@@ -68,10 +66,7 @@ def validate(file, strict):
                     # print(field2[0] + " " + field2[1])
                     passport[field2[0]] = field2[1]
 
-
-
     return count
-
 
 
 # Load file
