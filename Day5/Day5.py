@@ -17,11 +17,8 @@ def loadpuzzle(file):
             line = line.replace('R', '1')
             row = line[:7]
             column = line[7:]
-            print(row)
             rownum = BinaryToDecimal(row)
             columnnum = BinaryToDecimal(column)
-            print(BinaryToDecimal(row))
-            print(BinaryToDecimal(column))
             seatid = (rownum * 8) + columnnum
             print(seatid)
             seats[seatid] = 1
@@ -30,13 +27,14 @@ def loadpuzzle(file):
     y = 0
     for x in seats:
         if x == 0 and seats[y-1] == 1 and seats[y+1] == 1:
-            print(y)
+            print("My seat: "+ str(y))
         y = y + 1
     return highest
 
 
 # Load file
 file = 'Day5/day5.txt'
+
 # Part 1
 answer = loadpuzzle(file)
-print(answer)
+print("highest seat id: " + str(answer))
