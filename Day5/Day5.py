@@ -20,21 +20,23 @@ def loadpuzzle(file):
             rownum = BinaryToDecimal(row)
             columnnum = BinaryToDecimal(column)
             seatid = (rownum * 8) + columnnum
-            print(seatid)
             seats[seatid] = 1
-            if seatid > highest:
-                highest = seatid
-    y = 0
-    for x in seats:
-        if x == 0 and seats[y-1] == 1 and seats[y+1] == 1:
-            print("My seat: "+ str(y))
-        y = y + 1
-    return highest
+    return seats
 
 
 # Load file
 file = 'Day5/day5.txt'
+seats = loadpuzzle(file)
 
 # Part 1
-answer = loadpuzzle(file)
-print("highest seat id: " + str(answer))
+highest = 0
+for x, occupied in enumerate(seats):
+    if occupied == 1:
+        highest = x
+print("highest seat id: " + str(highest))
+
+# Part 2
+y = 0
+for x, occupied in enumerate(seats):
+    if occupied == 0 and seats[x - 1] == 1 and seats[x + 1] == 1:
+        print("My seat id: " + str(x))
