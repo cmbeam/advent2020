@@ -1,38 +1,44 @@
 # Load file
 def loadpuzzle(file):
-    highest = 0
-    seats = [0 for j in range(128*8)]
-    count1 = 0
-    count2 = 0
-    answers=set()
-    answer={}
+    resultJoin = {}
+    resultInt = {}
+    answers = set()
+    answer = {}
     x = 0
+    y = 0
     with open(file) as puzzle:
         for line in puzzle:
             line = line.strip('\n')
             if line == '':
-                print(str(answers) + str(len(answers)))
-                count1 = count1 + len(answers)
+                resultJoin[y] = answers
                 result = answer[0]
                 for i in answer:
-                    print(result)
-                    print(answer[i])
                     result = result.intersection(answer[i])
-                print(result)
-                print(len(result))
-                count2 = count2 + len(result)
+                resultInt[y] = result
                 answers = set()
                 answer = {}
                 x = 0
+                y = y + 1
             else:
                 answer[x] = set()
                 for n in line:
                     answers.add(n)
                     answer[x].add(n)
-                x = x + 1;
+                x = x + 1
 
-    return count2
+    return resultJoin, resultInt
 
 
-answer = loadpuzzle("Day6/day6.txt")
-print(answer)
+resultSet1, resultSet2 = loadpuzzle("Day6/day6.txt")
+
+# Part 1
+count = 0
+for x in resultSet1:
+    count = count + len(resultSet1[x])
+print("Part1: " + str(count))
+
+# Part 2
+count = 0
+for x in resultSet2:
+    count = count + len(resultSet2[x])
+print("Part2: " + str(count))
