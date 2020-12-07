@@ -1,12 +1,12 @@
 
 
 def getparents(tree, child, runninglist):
-    # runninglist.add(child)
-    print(runninglist)
+    # print(runninglist)
     list_of_keys = [key
                         for key, list_of_values in tree.items()
-                        if child in list_of_values]
-    # print(str(child) + " in: " + str(list_of_keys))
+                        for item in list_of_values
+                        if child in item]
+    #print(str(child) + " in: " + str(list_of_keys))
     if not list_of_keys:
         # print("done " + str(child))
         return runninglist
@@ -16,6 +16,21 @@ def getparents(tree, child, runninglist):
         runninglist = getparents(tree, key, runninglist)
 
     return runninglist
+
+
+def getchildren(tree, parent):
+    total = 0
+    print(parent)
+    list_of_children = tree[parent]
+    print(parent + "::" + str(list_of_children))
+    if 'other' in list_of_children:
+        return 1
+    for child in list_of_children:
+        total = total + getchildren(tree, child[0]) * int(child[1])
+        print(str(child) + " " + str(total))
+    # print(runningTotal)
+    return total + 1
+
 
 
 def loadpuzzle(file):
@@ -36,13 +51,18 @@ def loadpuzzle(file):
                 child = child.strip('bags')
                 child = child.strip('bag')
                 childp = child.split(' ')
-                color = childp[1] + " " + childp[2]
+                color = [0 for i in range(2)]
+                color[0] = childp[1] + " " + childp[2]
+                color[1] = childp[0]
                 # print("parent: " + parent + "  child: " + color)
                 if parent in parents:
                     existing = parents[parent]
                 else:
                     existing = []
-                existing.append(color)
+                if childp[1] == 'other':
+                    existing.append(childp[1])
+                else:
+                    existing.append(color)
                 parents[parent] = existing
 
 
@@ -50,9 +70,15 @@ def loadpuzzle(file):
 
 
 tree = loadpuzzle("Day7/day7.txt")
-#print(tree)
+print(tree)
+
+# Part 1
 list = set()
-#list.add("shiny gold")
+# list.add("shiny gold")
 finalList = getparents(tree, "shiny gold", list)
 print(len(finalList))
+
+# Part 2
+total = 0
+print(getchildren(tree, "shiny gold") - 1)
 
