@@ -20,14 +20,14 @@ def getparents(tree, child, runninglist):
 
 def getchildren(tree, parent):
     total = 0
-    print(parent)
+    # print(parent)
     list_of_children = tree[parent]
-    print(parent + "::" + str(list_of_children))
+    # print(parent + "::" + str(list_of_children))
     if 'other' in list_of_children:
         return 1
     for child in list_of_children:
         total = total + getchildren(tree, child[0]) * int(child[1])
-        print(str(child) + " " + str(total))
+        # print(str(child) + " " + str(total))
     # print(runningTotal)
     return total + 1
 
