@@ -27,7 +27,7 @@ while marker < len(code):
         if replacecount == -1:
             print("Part 1 Answer: " + str(accumulator))
         else:
-            print("Infinite loop.   Interupted  Accumulator: " + str(accumulator))
+            print("Infinite loop.   Interrupted  Accumulator: " + str(accumulator))
         marker = 0
         accumulator = 0
         register = [0 for j in range(len(code))]
