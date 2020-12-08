@@ -47,6 +47,7 @@ class Console:
                     counter += 1
         print("Part 2 Answer: " + str(self.accumulator))
 
+
 def load(filename):
     instructions = {}
     with open(filename) as file:
