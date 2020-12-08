@@ -10,7 +10,6 @@ class Console:
     accumulator = 0
     position = 0
 
-
     def run(self):
         register = [0 for j in range(len(self.code))]
         replacecount = -1
