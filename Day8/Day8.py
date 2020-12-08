@@ -19,35 +19,56 @@ def loadpuzzle(file):
 code = loadpuzzle("Day8/day8.txt")
 print(code)
 
+
 accumulator = 0
 marker = 0
 register = [0 for j in range(len(code))]
 run = True
+replacecount = -1
+counter = 0
 
-while marker < len(code) and run :
-    print(str(marker) + "  " + str(code[marker]))
+
+while marker < len(code) and run:
+    # print(str(marker + 1) + "  " + str(code[marker]))
     if register[marker] == 1:
-        run = False
-        break
-    register[marker] = 1
-
-    operation = code[marker][0]
-    if operation == 'nop':
-        marker = marker + 1
-    if operation == 'acc':
-        sign = code[marker][1]
-        number = code[marker][2]
-        if sign == '+':
-            accumulator = accumulator + int(number)
+        if replacecount == -1:
+            print("Part 1 Answer: " + str(accumulator))
         else:
-            accumulator = accumulator - int(number)
-        marker = marker + 1
-    if operation == 'jmp':
-        sign = code[marker][1]
-        number = code[marker][2]
-        if sign == '+':
-            marker = marker + int(number)
-        else:
-            marker = marker - int(number)
+            print("Infinite loop.   Interupted  Accumulator: " + str(accumulator))
+        # run = False
+        marker = 0
+        accumulator = 0
+        register = [0 for j in range(len(code))]
+        replacecount = replacecount + 1
+        counter = 0
+    else:
+        register[marker] = 1
 
-print(accumulator)
+        operation = code[marker][0]
+        if operation == 'nop':
+            if counter == replacecount:
+                operation = 'jmp'
+            else:
+                marker = marker + 1
+            counter = counter + 1
+        if operation == 'acc':
+            sign = code[marker][1]
+            number = code[marker][2]
+            if sign == '+':
+                accumulator = accumulator + int(number)
+            else:
+                accumulator = accumulator - int(number)
+            marker = marker + 1
+        if operation == 'jmp':
+            if counter == replacecount:
+                marker = marker + 1
+            else:
+                sign = code[marker][1]
+                number = code[marker][2]
+                if sign == '+':
+                    marker = marker + int(number)
+                else:
+                    marker = marker - int(number)
+            counter = counter + 1
+
+print("Part 2 Answer: " + str(accumulator))
