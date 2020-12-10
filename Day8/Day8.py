@@ -61,3 +61,6 @@ code = load("Day8/day8.txt")
 console = Console(code)
 console.run()
 
+
+for z in range(19):
+    print(z)
