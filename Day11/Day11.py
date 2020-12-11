@@ -112,6 +112,7 @@ def checkDistantNeighbors(map, x, y):
     return count
 
 
+
 def load(filename):
     data = []
     length = 0
