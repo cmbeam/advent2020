@@ -29,6 +29,44 @@ def rotate(direction, degrees):
     newD = directions[ind]
     return newD
 
+def rotateWaypoint(pos, degrees):
+    quadrant=0
+    if pos[0] > 0 and pos[1] > 0:
+        quadrant = 0
+    if pos[0] > 0 and pos[1] < 0:
+        quadrant = 1
+    if pos[0] < 0 and pos[1] < 0:
+        quadrant = 2
+    if pos[0] < 0 and pos[1] > 0:
+        quadrant = 3
+
+    if quadrant == 1 or quadrant == 3:
+        temp = pos[0]
+        pos[0] = pos[1]
+        pos[1] = temp
+
+    steps = int(degrees/90)
+    ind = divmod(quadrant + steps, 4)[1]
+    print("quad: " + str(quadrant))
+    if ind == 0:
+        newPos = [abs(pos[0]), abs(pos[1])]
+    if ind == 1:
+        newPos = [abs(pos[1]), -abs(pos[0])]
+    if ind == 2:
+        newPos = [-abs(pos[0]), -abs(pos[1])]
+    if ind == 3:
+        newPos = [-abs(pos[1]), abs(pos[0])]
+    print(str(newPos) + str(ind))
+    return newPos
+
+
+def moveToWaypoint(pos, waypoint, units):
+    newpos = pos
+    newpos[0] = newpos[0] + waypoint[0] * units
+    newpos[1] = newpos[1] + waypoint[1] * units
+    return newpos
+
+
 data = load("day12.txt")
 print(data)
 
@@ -40,7 +78,7 @@ currentDirection = 'E'
 
 print(pos)
 for d in data:
-    print(d[0] + " " + d[1])
+    # print(d[0] + " " + d[1])
     if d[0] == 'F':
        pos = moveForward(currentDirection, pos, d[1])
     elif d[0] == 'R':
@@ -49,30 +87,32 @@ for d in data:
         currentDirection = rotate(currentDirection, -int(d[1]))
     else:
         pos = moveForward(d[0], pos, d[1])
-    print(str(pos) + "  " + currentDirection)
-
+    # print(str(pos) + "  " + currentDirection)
 
 print(pos)
-print("Manhattan: " + str(abs(pos[0]) + abs(pos[1])))
+print("Part 1 Manhattan: " + str(abs(pos[0]) + abs(pos[1])))
 
 
 # Part 2
+pos = [0, 0]
+waypoint = [10, 1]
+
 print(pos)
 for d in data:
     print(d[0] + " " + d[1])
     if d[0] == 'F':
-       pos = moveForward(currentDirection, pos, d[1])
+       pos = moveToWaypoint(pos, waypoint, int(d[1]))
     elif d[0] == 'R':
-        currentDirection = rotate(currentDirection, int(d[1]))
+        waypoint = rotateWaypoint(waypoint, int(d[1]))
     elif d[0] == 'L':
-        currentDirection = rotate(currentDirection, -int(d[1]))
+        waypoint = rotateWaypoint(waypoint, -int(d[1]))
     else:
-        pos = moveForward(d[0], pos, d[1])
-    print(str(pos) + "  " + currentDirection)
+        waypoint = moveForward(d[0], waypoint, d[1])
+    print(str(pos) + "  " + " " + str(waypoint))
 
 
 print(pos)
-print("Manhattan: " + str(abs(pos[0]) + abs(pos[1])))
+print("Part 2 Manhattan: " + str(abs(pos[0]) + abs(pos[1])))
 
 
 
