@@ -29,8 +29,9 @@ def rotate(direction, degrees):
     newD = directions[ind]
     return newD
 
+
 def rotateWaypoint(pos, degrees):
-    quadrant=0
+    quadrant = 0
     if pos[0] > 0 and pos[1] > 0:
         quadrant = 0
     if pos[0] > 0 and pos[1] < 0:
@@ -47,7 +48,7 @@ def rotateWaypoint(pos, degrees):
 
     steps = int(degrees/90)
     ind = divmod(quadrant + steps, 4)[1]
-    print("quad: " + str(quadrant))
+    # print("quad: " + str(quadrant))
     if ind == 0:
         newPos = [abs(pos[0]), abs(pos[1])]
     if ind == 1:
@@ -56,7 +57,7 @@ def rotateWaypoint(pos, degrees):
         newPos = [-abs(pos[0]), -abs(pos[1])]
     if ind == 3:
         newPos = [-abs(pos[1]), abs(pos[0])]
-    print(str(newPos) + str(ind))
+    # print(str(newPos) + str(ind))
     return newPos
 
 
@@ -76,7 +77,6 @@ currentDirection = 'E'
 
 # Part 1
 
-print(pos)
 for d in data:
     # print(d[0] + " " + d[1])
     if d[0] == 'F':
@@ -97,9 +97,8 @@ print("Part 1 Manhattan: " + str(abs(pos[0]) + abs(pos[1])))
 pos = [0, 0]
 waypoint = [10, 1]
 
-print(pos)
 for d in data:
-    print(d[0] + " " + d[1])
+    # print(d[0] + " " + d[1])
     if d[0] == 'F':
        pos = moveToWaypoint(pos, waypoint, int(d[1]))
     elif d[0] == 'R':
@@ -108,7 +107,7 @@ for d in data:
         waypoint = rotateWaypoint(waypoint, -int(d[1]))
     else:
         waypoint = moveForward(d[0], waypoint, d[1])
-    print(str(pos) + "  " + " " + str(waypoint))
+    # print(str(pos) + "  " + " " + str(waypoint))
 
 
 print(pos)
