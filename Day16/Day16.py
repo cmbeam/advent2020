@@ -24,21 +24,25 @@ data = load("day16.txt")
 print(data[0])
 print(data[1])
 rules = data[0]
+tickets = data[2]
+
 errorrate= 0
-for ticket in data[2]:
+for ticket in tickets:
     ticketvalid = True
     for number in ticket:
         numbervalid = False
         for rule in rules:
             for range in rules[rule]:
                 if int(range[0]) <= int(number) and int(number) <= int(range[1]):
-                    #print("Valid   "+ number + "  " + range[0] + " " + range[1])
                     numbervalid = True
         if not numbervalid:
             ticketvalid = False
-            print("INVALID")
             errorrate += int(number)
     if not ticketvalid:
         print("remove ticket " + str(ticket))
+        tickets.remove(ticket)
 
-print(errorrate)
+print("Answer part1: " + str(errorrate))
+
+# Part 2
+
