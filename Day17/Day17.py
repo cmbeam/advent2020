@@ -41,7 +41,7 @@ def print_cube(cubes):
     print()
 
 
-data = load('day17test.txt')
+data = load('day17.txt')
 
 cubes = data
 z_depth = 1
@@ -53,7 +53,7 @@ for i in range(turns):
     # Expand cubes
     for cube in cubes:
         #print(str(cube) + " " + str(cubes[cube]))
-        for z in range(cube[0] - 1, cube[0] + 2):
+        for z in range(0, cube[0] + 2):
             for y in range(cube[1] - 1, cube[1] + 2):
                 for x in range(cube[2] - 1, cube[2] + 2 ):
                     cubes = create_cube(cubes, (z, y, x))
@@ -65,7 +65,10 @@ for i in range(turns):
             for y in range(cube[1] - 1, cube[1] + 2):
                 for x in range(cube[2] - 1, cube[2] + 2 ):
                     if (z, y, x) in cubes and cubes[z, y, x] == 1:
-                        count += 1
+                        if cube[0] == 0 and z != 0:
+                            count += 2
+                        else:
+                            count += 1
         #print(count)
         if cubes[cube] == 1:
             count -= 1
@@ -86,14 +89,20 @@ for i in range(turns):
     round_count = 0
     for cube in cubes:
         if cubes[cube] == 1:
-            round_count += 1
+            if cube[0] != 0:
+                round_count += 2
+            else:
+                round_count += 1
     print(str(i+1) + " Round count: "+ str(round_count))
 
 
 final_count = 0
 for cube in cubes:
     if cubes[cube] == 1:
-        final_count += 1
+        if cube[0] != 0:
+            final_count += 2
+        else:
+            final_count += 1
 print(final_count)
 
 
