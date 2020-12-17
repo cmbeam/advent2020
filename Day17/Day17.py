@@ -8,9 +8,9 @@ def load(filename):
             x = 0 - (int((len(dataline) / 2)))
             for cube in dataline:
                 if cube == '#':
-                    data[x, y, z] = 1
+                    data[z, y, x] = 1
                 else:
-                    data[x, y, z] = 0
+                    data[z, y, x] = 0
                 x += 1
             y += 1
 
@@ -22,32 +22,49 @@ def create_cube(cubes, coord):
         expanded_cubes[coord] = 0
     return expanded_cubes
 
+def print_cube(cubes):
+    sortedcs = sorted(cubes)
+    print(cubes)
+    print(sortedcs)
+    z_start = sortedcs[0][0]
+    y_start = sortedcs[0][1]
+    print("Z: " + str(z_start))
+    for cube in sortedcs:
+        if cube[0] > z_start:
+            z_start += 1
+            y_start = sortedcs[0][1]
+            print("\nZ: " + str(z_start))
+        if cube[1] > y_start:
+            y_start += 1
+            print("")
+        print(cubes[cube], end='')
+    print()
 
 
-data = load('day17.txt')
+data = load('day17test.txt')
 
 cubes = data
 z_depth = 1
 turns = 6
-print(cubes)
+print_cube(cubes)
 
 for i in range(turns):
 
     # Expand cubes
     for cube in cubes:
         #print(str(cube) + " " + str(cubes[cube]))
-        for z in range(cube[2] - 1, cube[2] + 2):
+        for z in range(cube[0] - 1, cube[0] + 2):
             for y in range(cube[1] - 1, cube[1] + 2):
-                for x in range(cube[0] - 1, cube[0] + 2 ):
-                    cubes = create_cube(cubes, (x, y, z))
+                for x in range(cube[2] - 1, cube[2] + 2 ):
+                    cubes = create_cube(cubes, (z, y, x))
     # Process cube state
     temp_cubes = cubes.copy()
     for cube in cubes:
         count = 0
-        for z in range(cube[2] - 1, cube[2] + 2):
+        for z in range(cube[0] - 1, cube[0] + 2):
             for y in range(cube[1] - 1, cube[1] + 2):
-                for x in range(cube[0] - 1, cube[0] + 2 ):
-                    if (x, y, z) in cubes and cubes[x, y, z] == 1:
+                for x in range(cube[2] - 1, cube[2] + 2 ):
+                    if (z, y, x) in cubes and cubes[z, y, x] == 1:
                         count += 1
         #print(count)
         if cubes[cube] == 1:
@@ -62,13 +79,15 @@ for i in range(turns):
             else:
                 temp_cubes[cube] = 0
     cubes = temp_cubes
-    print(cubes)
+    #print(sorted(cubes))
+    print_cube(cubes)
+
     print("Number: " + str(len(cubes)))
     round_count = 0
     for cube in cubes:
         if cubes[cube] == 1:
             round_count += 1
-    print("Round count: "+ str(round_count))
+    print(str(i+1) + " Round count: "+ str(round_count))
 
 
 final_count = 0
