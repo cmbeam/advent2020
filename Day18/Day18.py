@@ -1,14 +1,43 @@
 import re
 
+def push(obj, l, depth):
+    while depth:
+        l = l[-1]
+        depth -= 1
+
+    l.append(obj)
+
+def parse_parentheses(s):
+    groups = []
+    depth = 0
+
+    try:
+        for char in s:
+            if char == '(':
+                push([], groups, depth)
+                depth += 1
+            elif char == ')':
+                depth -= 1
+            elif char != ' ':
+                push(char, groups, depth)
+    except IndexError:
+        raise ValueError('Parentheses mismatch')
+
+    if depth > 0:
+        raise ValueError('Parentheses mismatch')
+    else:
+        return groups
+
 def load(filename):
     data = []
     with open(filename) as file:
         for line in file:
             dataline = line.strip("\n")
-            parts = re.split('\(|\)', dataline)
-            for x, part in enumerate(parts):
-                part = part.split(' ')
-                parts[x] = part
+
+            parts = parse_parentheses(dataline)
+            #for x, part in enumerate(parts):
+                #part = part.split(' ')
+               # parts[x] = part
             data.append(parts)
     return data
 
@@ -28,8 +57,8 @@ def solveEquation(equation):
             if len(part) > 1:
                 intermediate_answer = solveEquation(part)
                 print("1: " + str(solution) + "  " + operator + "    " + str(intermediate_answer))
-                if intermediate_answer[1] != '_':
-                    operator = intermediate_answer[1]
+                #if intermediate_answer[1] != '_':
+                   # operator = intermediate_answer[1]
 
                 if operator == '+':
                     solution += intermediate_answer[0]
@@ -37,7 +66,7 @@ def solveEquation(equation):
                     solution *= intermediate_answer[0]
                 else:
                     solution = intermediate_answer[0]
-                #print("2: " + str(solution) + "  " + operator)
+                print("2: " + str(solution) + "  " + operator)
             else:
                 for singlepart in part:
                     part = singlepart
@@ -59,7 +88,7 @@ def solveEquation(equation):
     elif equation[0] == '+':
         operator = '+'
 
-    #print(str(solution) + "   " + operator)
+    print(str(solution) + "   " + operator)
     return solution, operator
 
 data = load("day18test.txt")
@@ -71,6 +100,6 @@ for equation in data:
     value = solveEquation(equation)[0]
     print(value)
     total_sum += value
-print("anser: " + str(total_sum))
+print("answer: " + str(total_sum))
 
 #print(total_sum)
