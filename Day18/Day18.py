@@ -1,5 +1,6 @@
 import re
 
+
 def push(obj, l, depth):
     #print(depth)
     while depth:
@@ -7,6 +8,7 @@ def push(obj, l, depth):
         depth -= 1
 
     l.append(obj)
+
 
 def parse_parentheses(s):
     groups = []
@@ -31,34 +33,6 @@ def parse_parentheses(s):
         return groups
 
 
-def parse_parentheses_2(s):
-    groups = []
-    depth = 0
-    push([], groups, depth)
-    depth += 1
-    try:
-        for char in s:
-            if char == '(':
-                push([], groups, depth)
-                depth += 1
-                push([], groups, depth)
-                depth += 1
-            elif char == ')':
-                depth -= 1
-            elif char == '*':
-                push(char, groups, depth)
-                push([], groups, depth)
-                depth += 1
-            elif char != ' ':
-                push(char, groups, depth)
-    except IndexError:
-        raise ValueError('Parentheses mismatch')
-
-    #if depth > 1:
-        #raise ValueError('Parentheses mismatch')
-    else:
-        return groups
-
 def load(filename):
     data = []
     with open(filename) as file:
@@ -71,6 +45,7 @@ def load(filename):
                # parts[x] = part
             data.append(parts)
     return data
+
 
 def loadPart2(filename):
     data = []
@@ -147,25 +122,26 @@ def solveEquation(equation):
     return solution, operator
 
 
+#Part 1
 
-data = load("day18test.txt")
-#print(data)
+data = load("day18.txt")
 
 total_sum = 0
 for equation in data:
-    print(equation)
+    #print(equation)
     value = solveEquation(equation)[0]
-    print(value)
+    #print(value)
     total_sum += value
 print("answer part 1: " + str(total_sum))
 
+# Part 2
 data = loadPart2("day18.txt")
-print(data)
+
 total_sum = 0
 for equation in data:
-    print(equation)
+    #print(equation)
     value = solveEquation(equation)[0]
-    print(value)
+    #print(value)
     total_sum += value
 print("answer part 2: " + str(total_sum))
 
