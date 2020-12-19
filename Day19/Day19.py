@@ -18,8 +18,6 @@ def load(filename):
     return rules, messages
 
 data = load("day19.txt")
-#print(data[0])
-#print(data[1])
 
 
 def getValidFromRule(rules, rule_number):
@@ -97,15 +95,20 @@ print(reg31)
 
 count = 0
 for message in data[1]:
-    if regex.match("^"+reg42+"+$", message):
-        count+=1
-    elif regex.match("^("+reg42+'(?>z|(?1))*'+reg31+")$", message):
-        print(message)
+    # if regex.match("^"+reg42+"+$", message):
+    #      print("8 " +message)
+    #      count+=1
+    # if regex.match("^("+reg42+"(?>z|(?1))*"+reg31+")$", message):
+    #      print("11 " + message)
+    #      count+=1
+    if regex.match("^"+reg42+"+("+reg42+"(?>z|(?2))*"+reg31+")$", message):
+        print("f " + message)
         count+=1
 print("Answer part 2: " + str(count))
+print("^("+reg42+"+)(("+reg42+"(?>z|(?1))*"+reg31+"))$")
 
-matching = "tttxxx"
+matching = "trrrrxx"
 #\A(b(?>m|(?1))*e)\
 #^(t(?>[^()]|(?1))*x)$
-if regex.match('^((t)(?>z|(?1))*(x))$', matching):
+if regex.match('^(t|r)+(((t|r)(?>z|(?2))*(x|l)))$', matching):
     print("Match_test")
