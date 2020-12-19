@@ -16,13 +16,13 @@ def load(filename):
     return rules, messages
 
 data = load("day19.txt")
-print(data[0])
-print(data[1])
+#print(data[0])
+#print(data[1])
 
 
 def getValidFromRule(rules, rule_number):
     validMessages = []
-    print(str(rule_number) + str(rules[rule_number][0]))
+    #print(str(rule_number) + str(rules[rule_number][0]))
     rule = rules[rule_number][0]
     if str(rule[0]).startswith('"'):
         validMessages.append(rule[0].strip('"'))
@@ -36,13 +36,13 @@ def getValidFromRule(rules, rule_number):
                     meslist.append(mes)
                 nCombos = []
                 for messi in meslist:
-                    print(combos)
+                    #print(combos)
                     for combo in combos:
-                        print("Combo " + combo)
+                        #print("Combo " + combo)
                         nCombos.append(combo + messi)
                 combos = nCombos
-                print(str(rule_number) +" intra: " + str(combos))
-            print(combos)
+                #print(str(rule_number) +" intra: " + str(combos))
+            #print(combos)
             validMessages = validMessages + combos
 
 
@@ -51,16 +51,20 @@ def getValidFromRule(rules, rule_number):
 
 
 
-    print("messages: " + str(validMessages))
+    #print("messages: " + str(validMessages))
     return validMessages
 
 validMessages = getValidFromRule(data[0], '0')
-print(validMessages)
+#print(validMessages)
 
 count = 0
 for message in data[1]:
-    print(message)
+    #print(message)
     if message in validMessages:
-        print("valid")
+        #print("valid")
         count += 1
 print("Answer part 1: " + str(count))
+
+
+# part 2
+
