@@ -43,7 +43,11 @@ def rotate(tile):
     return tile
 
 def flipY(tile):
-    #print("flip: " + str(tile))
+    print("flip: " + str(tile))
+    for line in tile[1]:
+        for c in line:
+            print(c, end='')
+        print()
     grid = tile[1]
     new_grid = []
     for line in reversed(grid):
@@ -52,9 +56,9 @@ def flipY(tile):
 
     links = tile[2]
     new_links = [[] for n in range(2)]
-    new_links[0].append(links[0][2])
+    new_links[0].append(links[0][2][::-1])
     new_links[0].append(links[0][1][::-1])
-    new_links[0].append(links[0][0])
+    new_links[0].append(links[0][0][::-1])
     new_links[0].append(links[0][3][::-1])
 
     new_links[1].append(links[1][2])
@@ -62,12 +66,20 @@ def flipY(tile):
     new_links[1].append(links[1][0])
     new_links[1].append(links[1][3])
     tile[2] = new_links
-    #print("flipped: " + str(tile))
+    print("flippedy: " + str(tile))
+    for line in tile[1]:
+        for c in line:
+            print(c, end='')
+        print()
     return tile
 
 
 def flipX(tile):
-    #print("flip: " + str(tile))
+    # print("flip: ")
+    # for line in tile[1]:
+    #     for c in line:
+    #         print(c, end='')
+    #     print()
     grid = tile[1]
     new_grid = []
     for line in grid:
@@ -77,16 +89,20 @@ def flipX(tile):
     links = tile[2]
     new_links = [[] for n in range(2)]
     new_links[0].append(links[0][0][::-1])
-    new_links[0].append(links[0][3])
+    new_links[0].append(links[0][3][::-1])
     new_links[0].append(links[0][2][::-1])
-    new_links[0].append(links[0][1])
+    new_links[0].append(links[0][1][::-1])
 
     new_links[1].append(links[1][0])
     new_links[1].append(links[1][3])
     new_links[1].append(links[1][2])
     new_links[1].append(links[1][1])
     tile[2] = new_links
-    #print("flipped: " + str(tile))
+    print("flippedx: ")
+    for line in tile[1]:
+        for c in line:
+            print(c, end='')
+        print()
     return tile
 
 
@@ -136,7 +152,8 @@ for tile in data:
     if count == 2:
         prod *= int(tile[0])
         print(tile)
-        corner = tile
+        if tile[0] == '1951':
+            corner = flipY(tile)
 print('Answer part 1: ' + str(prod))
 
 final_grid = []
@@ -187,7 +204,7 @@ for y in range(2 + 1):
         for x in range(len(next_tile[1])):
             r = len(next_tile[1]) - 2
             if 0 < x < len(next_tile[1]) - 1:
-                final_grid[y*r+x-1] = final_grid[y*r+x-1] + current_tile[1][x][1:-1]
+                final_grid[y*r+x-1] = final_grid[y*r+x-1] + next_tile[1][x][1:-1]
         line_tile = next_tile
     #print(str(current_tile))
     for match2 in data:
@@ -201,6 +218,21 @@ for y in range(2 + 1):
         next_tile = flipX(next_tile)
     current_tile = next_tile
 
-for line in final_grid:
-    print(line)
+grid_envelope = []
+grid_envelope.append('Final grid')
+grid_envelope.append(final_grid)
+grid_envelope.append([['.#....#...', '...###.#..', '...#.##..#', '#.#.#####.'], ['', '2473', '2311', '']])
+
+print(grid_envelope)
+print()
+print()
+
+for line in grid_envelope[1]:
+    for n in line:
+        print(n, end='')
+    print()
+
+
+
+
 
