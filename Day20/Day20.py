@@ -139,6 +139,8 @@ for tile in data:
         corner = tile
 print('Answer part 1: ' + str(prod))
 
+final_grid = []
+
 print("starting corner: " + str(corner))
 print()
 for line in corner[1]:
@@ -163,8 +165,12 @@ print("Rotated corner: " + str(corner))
 #     print()
 
 current_tile = corner
+vert_pos = 0
 for y in range(2 + 1):
-    print(current_tile)
+    print(str(current_tile))
+    for x in range(len(current_tile[1])):
+        if 0 < x < len(current_tile[1]) - 1:
+            final_grid.append(current_tile[1][x][1:-1])
     line_tile = current_tile.copy()
     for x in range(2):
         for match in data:
@@ -178,6 +184,10 @@ for y in range(2 + 1):
         if next_tile[2][0][3] == line_tile[2][0][1]:
             next_tile = flipY(next_tile)
         print(str(next_tile))
+        for x in range(len(next_tile[1])):
+            r = len(next_tile[1]) - 2
+            if 0 < x < len(next_tile[1]) - 1:
+                final_grid[y*r+x-1] = final_grid[y*r+x-1] + current_tile[1][x][1:-1]
         line_tile = next_tile
     #print(str(current_tile))
     for match2 in data:
@@ -191,4 +201,6 @@ for y in range(2 + 1):
         next_tile = flipX(next_tile)
     current_tile = next_tile
 
+for line in final_grid:
+    print(line)
 
