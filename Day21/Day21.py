@@ -3,8 +3,8 @@ def load(filename):
     with open(filename) as file:
         x = 0
         for line in file:
-            dataline = line.strip("\n")
-            parts = dataline.split(' (contains ')
+            data_line = line.strip("\n")
+            parts = data_line.split(' (contains ')
             ingredients = parts[0].split(' ')
             allergens = parts[1].strip(')').split(', ')
             item = []
@@ -71,7 +71,7 @@ for item in data:
 print("Answer part 1: " + str(count))
 
 print()
-print("Answer part 2: ",end='')
+print("Answer part 2: ", end='')
 answer_part_2 = ''
 sorted_keys = sorted(ingredient_mapping.keys())
 for key in sorted_keys:
