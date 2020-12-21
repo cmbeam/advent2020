@@ -20,7 +20,7 @@ def borders(grid):
 
 
 def rotate(tile):
-    print("rotate")
+
     grid = tile[1]
     new_grid = [[] for i in range(len(grid))]
     for line in reversed(grid):
@@ -44,11 +44,7 @@ def rotate(tile):
     return tile
 
 def flipY(tile):
-    # print("flip: " + str(tile))
-    # for line in tile[1]:
-    #     for c in line:
-    #         print(c, end='')
-    #     print()
+
     grid = tile[1]
     new_grid = []
     for line in reversed(grid):
@@ -67,20 +63,12 @@ def flipY(tile):
     new_links[1].append(links[1][0])
     new_links[1].append(links[1][3])
     tile[2] = new_links
-    print("flippedy: " + str(tile))
-    # for line in tile[1]:
-    #     for c in line:
-    #         print(c, end='')
-    #     print()
+
     return tile
 
 
 def flipX(tile):
-    # print("flip: ")
-    # for line in tile[1]:
-    #     for c in line:
-    #         print(c, end='')
-    #     print()
+
     grid = tile[1]
     new_grid = []
     for line in grid:
@@ -99,11 +87,7 @@ def flipX(tile):
     new_links[1].append(links[1][2])
     new_links[1].append(links[1][1])
     tile[2] = new_links
-    print("flippedx: ")
-    # for line in tile[1]:
-    #     for c in line:
-    #         print(c, end='')
-    #     print()
+
     return tile
 
 
@@ -136,14 +120,13 @@ def load(filename):
 data = load("day20.txt")
 
 for tile in data:
-    # print(tile[0])
     for match in data:
         if not tile == match:
             for x in range(4):
                 if tile[2][0][x] in match[2][0] or tile[2][0][x][::-1] in match[2][0]:
-                    # print(match)
                     tile[2][1][x] = match[0]
 
+print("Corners:")
 prod = 1
 for tile in data:
     count = 0
@@ -153,40 +136,26 @@ for tile in data:
     if count == 2:
         prod *= int(tile[0])
         print(tile)
-        # if tile[0] == '1951':
-        #     corner = flipY(tile)
         corner = tile
 print('Answer part 1: ' + str(prod))
 
 final_grid = []
 
-print("starting corner: " + str(corner))
-print()
-for line in corner[1]:
-    for c in line:
-        print(c, end='')
-    print()
+
 
 tc = corner[2][1][0]
 lc = corner[2][1][3]
-print(str(tc) + " " + str(lc))
+
 while (tc != '' or lc != ''):
     corner = rotate(corner)
     tc = corner[2][1][0]
     lc = corner[2][1][3]
 
-print()
-print("Rotated corner: " + str(corner))
-# print()
-# for line in corner[1]:
-#     for c in line:
-#         print(c, end='')
-#     print()
+
 
 current_tile = corner
 vert_pos = 0
 for y in range(12):
-    print("row start: " + str(current_tile))
     for z in range(len(current_tile[1])):
         if 0 < z < len(current_tile[1]) - 1:
             final_grid.append(current_tile[1][z][1:-1])
@@ -194,27 +163,24 @@ for y in range(12):
     for x in range(11):
         for match in data:
             if line_tile[2][1][1] == match[0]:
-                print(match)
                 next_tile = match
                 while next_tile[2][1][3] != line_tile[0]:
-                    #print("rotate..." + str(next_tile[0]))
+
                     next_tile = rotate(next_tile)
 
         if next_tile[2][0][3] == line_tile[2][0][1]:
             next_tile = flipY(next_tile)
-        print("collumn continue: " + str(x) + str(y) +"  " + str(next_tile))
+
         for xx in range(len(next_tile[1])):
             r = len(next_tile[1]) - 2
             if 0 < xx < len(next_tile[1]) - 1:
                 final_grid[y*r+xx-1] = final_grid[y*r+xx-1] + next_tile[1][xx][1:-1]
         line_tile = next_tile
-    #print(str(current_tile))
+
     for match2 in data:
-        #print(str(current_tile[2][1][2]) + " 00000000 " + str(match2))
         if current_tile[2][1][2] == match2[0]:
             next_tile = match2
             while next_tile[2][1][0] != current_tile[0]:
-                #print("rotate..." + str(next_tile[0]))
                 next_tile = rotate(next_tile)
     if current_tile[2][0][2] == next_tile[2][0][0]:
         next_tile = flipX(next_tile)
@@ -225,7 +191,7 @@ grid_envelope.append('Final grid')
 grid_envelope.append(final_grid)
 grid_envelope.append([['.#....#...', '...###.#..', '...#.##..#', '#.#.#####.'], ['', '2473', '2311', '']])
 
-print(grid_envelope)
+
 print()
 print()
 
@@ -237,7 +203,6 @@ for line in grid_envelope[1]:
 
 def checkForMonster(grid):
     count = 0
-    #print(len(grid))
     for x in range(len(grid[0]) - 18):#20):
         for y in range(len(grid) - 1):
 
@@ -276,8 +241,6 @@ def checkForMonster(grid):
 
     if count > 0:
         print(str(count) +" Monster(s) found")
-    else:
-        print("-")
     return grid,count
 
 print()
@@ -354,9 +317,7 @@ for line in grid_envelope[1]:
             print(n, end='')
     print()
 print("Answer part 2: " +str(count))
-print(totlcount)
-print(monster_count)
-print(empty_count)
+
 
 
 
