@@ -34,19 +34,9 @@ for n in data:
 
 ingredient_mapping = {}
 for all_list in allergen_lists:
-    print(all_list)
     intersected = set(allergen_lists[all_list][0]).intersection(*allergen_lists[all_list])
-    print(intersected)
     ingredient_mapping[all_list] = intersected
-    # for inter in intersected:
-    #     if not ingredient_mapping.get(inter):
-    #         ingredient_mapping[inter] = [all_list]
-    #     else:
-    #         list_i = ingredient_mapping[inter]
-    #         list_i.append(all_list)
-    #         ingredient_mapping[inter] = list_i
-print()
-print(ingredient_mapping)
+
 
 complete = False
 while not complete:
@@ -61,11 +51,32 @@ while not complete:
 
                 if m != n:
                     if ingredient_mapping[m].intersection(remove_item):
-                        print("REMove " + str(remove_item))
                         cleaned_list = ingredient_mapping[m]
-                        print(cleaned_list)
                         cleaned_list = cleaned_list - remove_item
-                        print(cleaned_list)
                         ingredient_mapping[m] = cleaned_list
 
 print(ingredient_mapping)
+
+count = 0
+for item in data:
+    list_of_ingredients = item[1]
+    for ingredient in list_of_ingredients:
+        match = False
+        for defined in ingredient_mapping:
+            for t in ingredient_mapping[defined]:
+                value = t
+            if ingredient == value:
+                match = True
+        if not match:
+            count += 1
+print("Answer part 1: " + str(count))
+
+print()
+print("Answer part 2: ",end='')
+answer_part_2 = ''
+sorted_keys = sorted(ingredient_mapping.keys())
+for key in sorted_keys:
+    for value in ingredient_mapping[key]:
+        print(value+',', end='')
+print()
+
