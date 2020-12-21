@@ -5,12 +5,12 @@ def load(filename):
         for line in file:
             dataline = line.strip("\n")
             parts = dataline.split(' (contains ')
-            ingriedients = parts[0].split(' ')
-            alergens = parts[1].strip(')').split(', ')
+            ingredients = parts[0].split(' ')
+            allergens = parts[1].strip(')').split(', ')
             item = []
             item.append(x)
-            item.append(ingriedients)
-            item.append(alergens)
+            item.append(ingredients)
+            item.append(allergens)
             data.append(item)
             x += 1
     return data
@@ -18,6 +18,7 @@ def load(filename):
 
 def intersection(first, *others):
     return set(first).intersection(*others)
+
 
 data = load("day21.txt")
 print(data)
@@ -47,8 +48,6 @@ while not complete:
         else:
             for m in ingredient_mapping:
                 remove_item = ingredient_mapping[n]
-                #print(remove_item)
-
                 if m != n:
                     if ingredient_mapping[m].intersection(remove_item):
                         cleaned_list = ingredient_mapping[m]
