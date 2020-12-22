@@ -32,7 +32,46 @@ def play_game(deck1, deck2):
         round += 1
 
 
-data = load('day22.txt')
+def play_game_recursive(deck1, deck2):
+    round_count = 1
+    rounds = []
+
+    while len(deck1) > 0 and len(deck2) > 0:
+        round_sig = [str(deck1), str(deck2)]
+        if round_sig in rounds:
+            print("Loop check")
+            break
+        rounds.append(round_sig)
+
+        card_one = int(deck1.pop(0))
+        card_two = int(deck2.pop(0))
+
+        if len(deck1) >= card_one and len(deck2) >= card_two:
+            print("Recursive Game")
+            r_deck1 = deck1[0:card_one]
+            r_deck2 = deck2[0:card_two]
+            play_game_recursive(r_deck1, r_deck2)
+            if len(r_deck1) == 0:
+                deck2.append(card_two)
+                deck2.append(card_one)
+            else:
+                deck1.append(card_one)
+                deck1.append(card_two)
+
+        elif card_one > card_two:
+            deck1.append(card_one)
+            deck1.append(card_two)
+        else:
+            deck2.append(card_two)
+            deck2.append(card_one)
+
+        print("Round " + str(round_count))
+        print("Player 1:" + str(deck1))
+        print("Player 2:" + str(deck2))
+        round_count += 1
+
+
+data = load('day22test.txt')
 deck_player_one = data[0]
 deck_player_two = data[1]
 print("Starting decks:")
@@ -41,6 +80,8 @@ print("Player 2: " + str(deck_player_two))
 
 play_game(deck_player_one, deck_player_two)
 
+print()
+print("Game over")
 score = 0
 if len(deck_player_two) == 0:
     print("Player 1 wins " + str(deck_player_one))
@@ -51,4 +92,30 @@ else:
     for x, card in enumerate(reversed(deck_player_two)):
         score += int(card) * (x + 1)
 
+print()
 print("Answer part 1: " + str(score))
+
+
+data = load('day22.txt')
+deck_player_one = data[0]
+deck_player_two = data[1]
+print("Starting decks:")
+print("Player 1: " + str(deck_player_one))
+print("Player 2: " + str(deck_player_two))
+
+play_game_recursive(deck_player_one, deck_player_two)
+
+print()
+print("Game over")
+score = 0
+if len(deck_player_two) == 0:
+    print("Player 1 wins " + str(deck_player_one))
+    for x, card in enumerate(reversed(deck_player_one)):
+        score += int(card) * (x + 1)
+else:
+    print("player 2 wins " + str(deck_player_two))
+    for x, card in enumerate(reversed(deck_player_two)):
+        score += int(card) * (x + 1)
+
+print()
+print("Answer part 2: " + str(score))
