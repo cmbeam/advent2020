@@ -14,6 +14,24 @@ def load(filename):
     file.close()
     return deck_one, deck_two
 
+
+def play_game(deck1, deck2):
+    round = 1
+    while len(deck_player_one) > 0 and len(deck_player_two) > 0:
+        card_one = int(deck_player_one.pop(0))
+        card_two = int(deck_player_two.pop(0))
+        if card_one > card_two:
+            deck_player_one.append(card_one)
+            deck_player_one.append(card_two)
+        else:
+            deck_player_two.append(card_two)
+            deck_player_two.append(card_one)
+        print("Round " + str(round))
+        print("Player 1:" + str(deck_player_one))
+        print("Player 2:" + str(deck_player_two))
+        round += 1
+
+
 data = load('day22.txt')
 deck_player_one = data[0]
 deck_player_two = data[1]
@@ -21,20 +39,7 @@ print("Starting decks:")
 print("Player 1: " + str(deck_player_one))
 print("Player 2: " + str(deck_player_two))
 
-round = 1
-while len(deck_player_one) > 0 and len(deck_player_two) > 0:
-    card_one = int(deck_player_one.pop(0))
-    card_two = int(deck_player_two.pop(0))
-    if card_one > card_two:
-        deck_player_one.append(card_one)
-        deck_player_one.append(card_two)
-    else:
-        deck_player_two.append(card_two)
-        deck_player_two.append(card_one)
-    print("Round " + str(round))
-    print("Player 1:" + str(deck_player_one))
-    print("Player 2:" + str(deck_player_two))
-    round += 1
+play_game(deck_player_one, deck_player_two)
 
 score = 0
 if len(deck_player_two) == 0:
@@ -47,4 +52,3 @@ else:
         score += int(card) * (x + 1)
 
 print("Answer part 1: " + str(score))
-
