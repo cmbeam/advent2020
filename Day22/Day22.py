@@ -26,9 +26,9 @@ def play_game(deck1, deck2):
         else:
             deck_player_two.append(card_two)
             deck_player_two.append(card_one)
-        print("Round " + str(round))
-        print("Player 1:" + str(deck_player_one))
-        print("Player 2:" + str(deck_player_two))
+        # print("Round " + str(round))
+        # print("Player 1:" + str(deck_player_one))
+        # print("Player 2:" + str(deck_player_two))
         round += 1
 
 
@@ -39,7 +39,6 @@ def play_game_recursive(deck1, deck2):
     while len(deck1) > 0 and len(deck2) > 0:
         round_sig = [str(deck1), str(deck2)]
         if round_sig in rounds:
-            print("Loop check")
             break
         rounds.append(round_sig)
 
@@ -47,7 +46,6 @@ def play_game_recursive(deck1, deck2):
         card_two = int(deck2.pop(0))
 
         if len(deck1) >= card_one and len(deck2) >= card_two:
-            print("Recursive Game")
             r_deck1 = deck1[0:card_one]
             r_deck2 = deck2[0:card_two]
             play_game_recursive(r_deck1, r_deck2)
@@ -65,13 +63,13 @@ def play_game_recursive(deck1, deck2):
             deck2.append(card_two)
             deck2.append(card_one)
 
-        print("Round " + str(round_count))
-        print("Player 1:" + str(deck1))
-        print("Player 2:" + str(deck2))
+        # print("Round " + str(round_count))
+        # print("Player 1:" + str(deck1))
+        # print("Player 2:" + str(deck2))
         round_count += 1
 
 
-data = load('day22test.txt')
+data = load('day22.txt')
 deck_player_one = data[0]
 deck_player_two = data[1]
 print("Starting decks:")
@@ -81,7 +79,6 @@ print("Player 2: " + str(deck_player_two))
 play_game(deck_player_one, deck_player_two)
 
 print()
-print("Game over")
 score = 0
 if len(deck_player_two) == 0:
     print("Player 1 wins " + str(deck_player_one))
@@ -94,7 +91,7 @@ else:
 
 print()
 print("Answer part 1: " + str(score))
-
+print()
 
 data = load('day22.txt')
 deck_player_one = data[0]
@@ -106,7 +103,7 @@ print("Player 2: " + str(deck_player_two))
 play_game_recursive(deck_player_one, deck_player_two)
 
 print()
-print("Game over")
+
 score = 0
 if len(deck_player_two) == 0:
     print("Player 1 wins " + str(deck_player_one))
