@@ -41,7 +41,6 @@ def insert_cups(circle, inserts, destination):
 
 
 
-
 #data = [3, 8, 9, 1, 2, 5, 4, 6, 7]
 data = [9, 4, 2, 3, 8, 7, 6, 1, 5]
 
@@ -87,17 +86,24 @@ while starting_index < data.index(1):
 print("Answer part 1: " + final_string)
 
 
-data = [9, 4, 2, 3, 8, 7, 6, 1, 5,1000000]
+data = [9, 4, 2, 3, 8, 7, 6, 1, 5]
 
-# for x in range(10,10,1):
-#     data.append(x)
+for x in range(10,100,1):
+    data.append(x)
 # for x in range(10,1000000,1):
 #     data.append(x)
 
+circle_combos = []
 val = data[0]
 add_values_count = 10
-for i in range(100):
-    print('Iteration: ' + str(i))
+# circle_combos.append(data.copy())
+for i in range(100000):
+    #print('Iteration: ' + str(i))
+    # if data in circle_combos:
+    #     print("Iterations before repeat: " + str(i))
+    #     break
+    # else:
+    #     circle_combos.append(data.copy())
 
     # print()
     # print(val)
@@ -110,7 +116,7 @@ for i in range(100):
     # print(d)
 
     insert_cups(data, r, d)
-    # print(data)
+    #print(data)
 
     current_pos = data.index(val)
     if current_pos + 1 < len(data):
@@ -153,12 +159,16 @@ for i in range(100):
     # else:
     #     current_pos = 0
     # val = data[current_pos]
-
+print(i)
 print(data)
+
+print()
+print()
+print()
+
 data.append(data[0])
 data.append(data[1])
 starting_index = data.index(1) + 1
-print(data[starting_index-1])
 print(data[starting_index])
 print(data[starting_index+1])
 print("Answer part 2: " + str(data[starting_index] * data[starting_index+1]))
