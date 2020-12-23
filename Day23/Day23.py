@@ -1,10 +1,10 @@
-limit = 9
+limit = 1000000
 
 
 class Node:
-  def __init__(self,data, next_node=None):
-    self.data = data;
-    self.next = next_node;
+    def __init__(self, data, next_node=None):
+        self.data = data
+        self.next = next_node
 
 
 class CreateList:
@@ -16,19 +16,16 @@ class CreateList:
         self.nodelist = {}
 
     def add(self, data):
-        newNode = Node(data);
+        new_node = Node(data)
         if self.head.data is None:
-            self.head = newNode
-            self.tail = newNode
-            newNode.next = self.head
+            self.head = new_node
+            self.tail = new_node
+            new_node.next = self.head
         else:
-            # tail will point to new node.
-            self.tail.next = newNode
-            # New node will become new tail.
-            self.tail = newNode
-            # Since, it is circular linked list tail will point to head.
+            self.tail.next = new_node
+            self.tail = new_node
             self.tail.next = self.head
-        self.nodelist[data] = newNode
+        self.nodelist[data] = new_node
 
     def remove(self):
         current = self.head
@@ -49,39 +46,38 @@ class CreateList:
             target -= 1
             if target == 0:
                 target = limit
-        #print("target value: " + str(target))
+
         current = self.nodelist[target]
-        #print(current.next.data)
-        newNode = Node(data[2], current.next)
-        self.nodelist[data[2]] = newNode
-        #print(str(newNode.next.data) + " " + str(newNode.data))
-        newNode2 = Node(data[1], newNode)
+
+        new_node = Node(data[2], current.next)
+        self.nodelist[data[2]] = new_node
+
+        newNode2 = Node(data[1], new_node)
         self.nodelist[data[1]] = newNode2
-        #print(str(newNode2.next.data) + " " + str(newNode2.data))
+
         newNode3 = Node(data[0], newNode2)
         self.nodelist[data[0]] = newNode3
-        #print(str(newNode3.next.data) + " " + str(newNode3.data))
-        current.next = newNode3
-        # for d in reversed(data):
-        #     print(current)
-        #     newNode = Node(d, current.next)
-        #     current.next = newNode
 
+        current.next = newNode3
 
     def move_current(self):
         self.head = self.head.next
+
+    def move_current_to(self, data):
+        current = self.nodelist[data]
+        self.head = current
 
     def display(self):
         the_string = ''
         current = self.head
         if self.head is None:
-          print("[]")
-          return;
+            print("[]")
+            return
         else:
             the_string += str(current.data)
-            while(current.next != self.head):
+            while current.next != self.head:
                 current = current.next
-                the_string  += " " + str(current.data)
+                the_string += " " + str(current.data)
         print(the_string)
 
 # cl = CreateList()
@@ -106,6 +102,7 @@ class CreateList:
 # cl.insert([5,6,7])
 # cl.display()
 
+
 def remove_three(circle, current_value):
     removed = []
     current = circle.index(current_value)
@@ -128,9 +125,9 @@ def remove_three(circle, current_value):
 
     return removed
 
+
 def get_destination_cup(circle, current):
     value = current
-
 
     for x in range(value-1, 0, -1):
         if x in circle:
@@ -141,37 +138,25 @@ def get_destination_cup(circle, current):
             highest = n
     return circle.index(highest)
 
+
 def insert_cups(circle, inserts, destination):
     circle.insert(destination+1, inserts[0])
     circle.insert(destination + 2, inserts[1])
     circle.insert(destination + 3, inserts[2])
 
-iter = 100000
+iter = 10000000
 
-#data = [3, 8, 9, 1, 2, 5, 4, 6, 7]
 data = [9, 4, 2, 3, 8, 7, 6, 1, 5]
-
-
-
 
 print(data)
 val = data[0]
 
 for i in range(100):
-    print('Iteration: ' + str(i))
 
-   # print()
-    #print(val)
-    #print(data)
     r = remove_three(data, val)
-    #print(r)
-    #print(data)
-
     d = get_destination_cup(data, val)
-    #print(d)
 
     insert_cups(data, r, d)
-    #print(data)
 
     current_pos = data.index(val)
     if current_pos + 1 < len(data):
@@ -209,39 +194,23 @@ data_ll.add(5)
 
 for x in range(10, limit+1, 1):
      data_ll.add(x)
-# for x in range(10,1000000,1):
-#     data.append(x)
-
-
-
 
 for i in range(iter):
-    print('Iteration: ' + str(i))
-    #data_ll.display()
 
     d2 = data_ll.remove()
     #data_ll.display()
-
-
     data_ll.insert(d2)
     #data_ll.display()
-
-
     data_ll.move_current()
 
 
-
-data_ll.display()
-
 print()
 print()
 print()
 
-data.append(data[0])
-data.append(data[1])
-starting_index = data.index(1) + 1
-print(data[starting_index])
-print(data[starting_index+1])
-print("Answer part 2: " + str(data[starting_index] * data[starting_index+1]))
 
-print("Answer part 1: " + final_string)
+
+data_ll.move_current_to(1)
+answer_set = data_ll.remove()
+
+print("Answer part 2: " + str(answer_set[0] * answer_set[1] ))
