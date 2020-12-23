@@ -95,30 +95,22 @@ data = [9, 4, 2, 3, 8, 7, 6, 1, 5,1000000]
 #     data.append(x)
 
 val = data[0]
-for i in range(15):
+add_values_count = 10
+for i in range(100):
     print('Iteration: ' + str(i))
 
-    print()
-    print(val)
-    print(data)
+    # print()
+    # print(val)
+    # print(data)
     r = remove_three(data, val)
-    print(r)
-    print(data)
+    # print(r)
+    # print(data)
 
     d = get_destination_cup(data, val)
-    print(d)
+    # print(d)
 
-
-    current2 = data.index(val)
-    print("Index: " + str(current2))
-    if current2 > 3:
-        data.insert(data.index(1000000), current2 + 6)
-        # if d + 2 == len(data):
-        #     d += 1
-    print(data)
     insert_cups(data, r, d)
-
-    print(data)
+    # print(data)
 
     current_pos = data.index(val)
     if current_pos + 1 < len(data):
@@ -126,6 +118,41 @@ for i in range(15):
     else:
         current_pos = 0
     val = data[current_pos]
+
+    # insert_point = data.index(1000000)
+    # data.insert(insert_point, add_values_count)
+    # data.insert(insert_point, add_values_count + 1)
+    # data.insert(insert_point, add_values_count + 2)
+    # add_values_count += 3
+    #
+    # # print()
+    # # print(val)
+    # # print(data)
+    # r = remove_three(data, val)
+    # # print(r)
+    # # print(data)
+    #
+    # d = get_destination_cup(data, val)
+    # # print(d)
+    #
+    #
+    # # current2 = data.index(val)
+    # # print("Index: " + str(current2))
+    # # if current2 > 3:
+    # #     data.insert(data.index(1000000), current2 + 6)
+    #     # if d + 2 == len(data):
+    #     #     d += 1
+    # # print(data)
+    # insert_cups(data, r, d)
+    #
+    # # print(data)
+    #
+    # current_pos = data.index(val)
+    # if current_pos + 1 < len(data):
+    #     current_pos += 1
+    # else:
+    #     current_pos = 0
+    # val = data[current_pos]
 
 print(data)
 data.append(data[0])
