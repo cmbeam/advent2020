@@ -1,3 +1,5 @@
+limit = 9
+
 
 class Node:
   def __init__(self,data, next_node=None):
@@ -11,6 +13,7 @@ class CreateList:
         self.tail = Node(None)
         self.head.next = self.tail
         self.tail.next = self.head
+        self.nodelist = {}
 
     def add(self, data):
         newNode = Node(data);
@@ -25,54 +28,61 @@ class CreateList:
             self.tail = newNode
             # Since, it is circular linked list tail will point to head.
             self.tail.next = self.head
+        self.nodelist[data] = newNode
 
     def remove(self):
         current = self.head
         removed_nodes = []
         for n in range(3):
             removed_nodes.append(current.next.data)
+            self.nodelist.pop(current.next.data)
             current.next = current.next.next
-
         return removed_nodes
 
     def insert(self, data):
         current = self.head
         value = current.data
-        print("value: " + str(value))
-        highest = 0
-        while (current.next != self.head):
-            current = current.next
-            if current.data > highest:
-                highest = current.data
-            if current.data < value:
-                for d in reversed(data):
-                    newNode = Node(d, current.next)
-                    current.next = newNode
-                return
-        print("highest: " + str(highest))
-        current = self.head
-        while (current.next != self.head):
-            current = current.next
-            if current.data == highest:
-                for d in reversed(data):
-                    newNode = Node(d, current.next)
-                    current.next = newNode
-                break
+        target = value - 1
+        if target == 0:
+            target = limit
+        while target in data:
+            target -= 1
+            if target == 0:
+                target = limit
+        #print("target value: " + str(target))
+        current = self.nodelist[target]
+        #print(current.next.data)
+        newNode = Node(data[2], current.next)
+        self.nodelist[data[2]] = newNode
+        #print(str(newNode.next.data) + " " + str(newNode.data))
+        newNode2 = Node(data[1], newNode)
+        self.nodelist[data[1]] = newNode2
+        #print(str(newNode2.next.data) + " " + str(newNode2.data))
+        newNode3 = Node(data[0], newNode2)
+        self.nodelist[data[0]] = newNode3
+        #print(str(newNode3.next.data) + " " + str(newNode3.data))
+        current.next = newNode3
+        # for d in reversed(data):
+        #     print(current)
+        #     newNode = Node(d, current.next)
+        #     current.next = newNode
+
 
     def move_current(self):
         self.head = self.head.next
 
     def display(self):
+        the_string = ''
         current = self.head
         if self.head is None:
           print("[]")
           return;
         else:
-            print(current.data, end=' ')
+            the_string += str(current.data)
             while(current.next != self.head):
                 current = current.next
-                print(current.data, end=' ')
-        print()
+                the_string  += " " + str(current.data)
+        print(the_string)
 
 # cl = CreateList()
 # cl.add(1)
@@ -136,7 +146,7 @@ def insert_cups(circle, inserts, destination):
     circle.insert(destination + 2, inserts[1])
     circle.insert(destination + 3, inserts[2])
 
-iter = 4
+iter = 100000
 
 #data = [3, 8, 9, 1, 2, 5, 4, 6, 7]
 data = [9, 4, 2, 3, 8, 7, 6, 1, 5]
@@ -147,7 +157,7 @@ data = [9, 4, 2, 3, 8, 7, 6, 1, 5]
 print(data)
 val = data[0]
 
-for i in range(iter):
+for i in range(100):
     print('Iteration: ' + str(i))
 
    # print()
@@ -197,8 +207,8 @@ data_ll.add(6)
 data_ll.add(1)
 data_ll.add(5)
 
-# for x in range(10,100,1):
-#     data.append(x)
+for x in range(10, limit+1, 1):
+     data_ll.add(x)
 # for x in range(10,1000000,1):
 #     data.append(x)
 
@@ -207,72 +217,19 @@ data_ll.add(5)
 
 for i in range(iter):
     print('Iteration: ' + str(i))
-    data_ll.display()
-    # if data in circle_combos:
-    #     print("Iterations before repeat: " + str(i))
-    #     break
-    # else:
-    #     circle_combos.append(data.copy())
+    #data_ll.display()
 
-    # print()
-    # print(val)
-    # print(data)
-    #r = remove_three(data, val)
     d2 = data_ll.remove()
-    data_ll.display()
-    # print(r)
-    # print(data)
+    #data_ll.display()
 
-    #d = get_destination_cup(data, val)
-    # print(d)
 
-    #insert_cups(data, r, d)
     data_ll.insert(d2)
-    data_ll.display()
-    #print(data)
+    #data_ll.display()
 
-    # current_pos = data.index(val)
-    # if current_pos + 1 < len(data):
-    #     current_pos += 1
-    # else:
-    #     current_pos = 0
-    # val = data[current_pos]
+
     data_ll.move_current()
 
-    # insert_point = data.index(1000000)
-    # data.insert(insert_point, add_values_count)
-    # data.insert(insert_point, add_values_count + 1)
-    # data.insert(insert_point, add_values_count + 2)
-    # add_values_count += 3
-    #
-    # # print()
-    # # print(val)
-    # # print(data)
-    # r = remove_three(data, val)
-    # # print(r)
-    # # print(data)
-    #
-    # d = get_destination_cup(data, val)
-    # # print(d)
-    #
-    #
-    # # current2 = data.index(val)
-    # # print("Index: " + str(current2))
-    # # if current2 > 3:
-    # #     data.insert(data.index(1000000), current2 + 6)
-    #     # if d + 2 == len(data):
-    #     #     d += 1
-    # # print(data)
-    # insert_cups(data, r, d)
-    #
-    # # print(data)
-    #
-    # current_pos = data.index(val)
-    # if current_pos + 1 < len(data):
-    #     current_pos += 1
-    # else:
-    #     current_pos = 0
-    # val = data[current_pos]
+
 
 data_ll.display()
 
@@ -286,3 +243,5 @@ starting_index = data.index(1) + 1
 print(data[starting_index])
 print(data[starting_index+1])
 print("Answer part 2: " + str(data[starting_index] * data[starting_index+1]))
+
+print("Answer part 1: " + final_string)
