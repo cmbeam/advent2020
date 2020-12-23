@@ -1,4 +1,105 @@
 
+class Node:
+  def __init__(self,data, next_node=None):
+    self.data = data;
+    self.next = next_node;
+
+class CreateList:
+  #Declaring head and tail pointer as null.
+    def __init__(self):
+        self.head = Node(None);
+        self.tail = Node(None);
+        self.head.next = self.tail;
+        self.tail.next = self.head;
+    def add(self, data):
+        newNode = Node(data);
+        # Checks if the list is empty.
+        if self.head.data is None:
+            # If list is empty, both head and tail would point to new node.
+            self.head = newNode;
+            self.tail = newNode;
+            newNode.next = self.head;
+        else:
+            # tail will point to new node.
+            self.tail.next = newNode;
+            # New node will become new tail.
+            self.tail = newNode;
+            # Since, it is circular linked list tail will point to head.
+            self.tail.next = self.head;
+
+    def remove(self):
+        current = self.head
+        removed_nodes = []
+        for n in range(3):
+            removed_nodes.append(current.next.data)
+            current.next = current.next.next
+
+        return removed_nodes
+
+    def insert(self, data):
+        current = self.head
+        value = current.data
+        print("value: " + str(value))
+        highest = 0
+        while (current.next != self.head):
+            current = current.next
+            if current.data > highest:
+                highest = current.data
+            if current.data < value:
+                for d in reversed(data):
+                    newNode = Node(d, current.next)
+                    current.next = newNode
+                break
+        print("highest: " + str(highest))
+        current = self.head
+        while (current.next != self.head):
+            current = current.next
+            if current.data == highest:
+                for d in reversed(data):
+                    newNode = Node(d, current.next)
+                    current.next = newNode
+                break
+
+
+
+    def move_current(self):
+        self.head = self.head.next
+
+    def display(self):
+        current = self.head
+        if self.head is None:
+          print("List is empty")
+          return;
+        else:
+            print("Nodes of the circular linked list: ")
+            #Prints each node by incrementing pointer.
+            print(current.data),
+            while(current.next != self.head):
+                current = current.next
+                print(current.data),
+
+cl = CreateList()
+cl.add(1)
+cl.add(3)
+cl.add(2)
+cl.add(2)
+cl.add(2)
+cl.add(9)
+cl.move_current()
+cl.display()
+cl.move_current()
+cl.display()
+cl.display()
+d = cl.remove()
+print(d)
+cl.display()
+cl.move_current()
+cl.display()
+cl.add(d)
+cl.display()
+cl.insert([5,6,7])
+cl.display()
+
 def remove_three(circle, current_value):
     removed = []
     current = circle.index(current_value)
