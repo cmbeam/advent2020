@@ -103,7 +103,6 @@ for tile in data:
             elif step == 'se':
                 coord = move_se(coord)
             step = ''
-    # print("Tile coord: " + str(coord) + "  " + str(grid[coord[0], coord[1]]))
     if str(coord) in grid and grid[str(coord)] == 1:
         grid[str(coord)] = 0
     else:
@@ -133,15 +132,11 @@ for n in range(100):
                      next_grid[pos] = 1
                 #print('# ', end='')
                 # print(neighbor_count(grid, pos), end=' ')
-                #else:
-                    # next_grid[pos] = 1
             else:
                 if neighbor_count(grid, pos) == 2:
                     next_grid[pos] = 1
                 #print('. ', end='')
                 #print(neighbor_count(grid, pos), end=' ')
-                # else:
-                #     next_grid[pos] = 0
         # print(y)
     grid = next_grid.copy()
 
