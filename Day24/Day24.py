@@ -1,9 +1,12 @@
+import json
+
+
 def load(filename):
     data = []
     with open(filename) as file:
         for line in file:
             data_line = line.strip("\n")
-            data .append(data_line)
+            data.append(data_line)
     return data
 
 
@@ -45,14 +48,44 @@ def move_w(coord):
     return coord
 
 
+def neighbor_count(grid, pos):
+    count = 0
+    coord = json.loads(pos)
+    if divmod(coord[1], 2)[1] == 1:
+        if str([coord[0], coord[1] - 1]) in grid and grid[str([coord[0], coord[1] - 1])] == 1:
+            count += 1
+        if str([coord[0] + 1, coord[1] - 1]) in grid and grid[str([coord[0] + 1, coord[1] - 1])] == 1:
+            count += 1
+        if str([coord[0] + 1, coord[1]]) in grid and grid[str([coord[0] + 1, coord[1]])] == 1:
+            count += 1
+        if str([coord[0] + 1, coord[1] + 1]) in grid and grid[str([coord[0] + 1, coord[1] + 1])] == 1:
+            count += 1
+        if str([coord[0], coord[1] + 1]) in grid and grid[str([coord[0], coord[1] + 1])] == 1:
+            count += 1
+        if str([coord[0] - 1, coord[1]]) in grid and grid[str([coord[0] - 1, coord[1]])] == 1:
+            count += 1
+    else:
+        if str([coord[0] - 1, coord[1] - 1]) in grid and grid[str([coord[0] - 1, coord[1] - 1])] == 1:
+            count += 1
+        if str([coord[0], coord[1] - 1]) in grid and grid[str([coord[0], coord[1] - 1])] == 1:
+            count += 1
+        if str([coord[0] + 1, coord[1]]) in grid and grid[str([coord[0] + 1, coord[1]])] == 1:
+            count += 1
+        if str([coord[0], coord[1] + 1]) in grid and grid[str([coord[0], coord[1] + 1])] == 1:
+            count += 1
+        if str([coord[0] - 1, coord[1] + 1]) in grid and grid[str([coord[0] - 1, coord[1] + 1])] == 1:
+            count += 1
+        if str([coord[0] - 1, coord[1]]) in grid and grid[str([coord[0] - 1, coord[1]])] == 1:
+            count += 1
+    return count
+
+
 data = load('day24.txt')
 
-
-size = 50
-grid = [[0 for y in range(size)] for x in range(size)]
+grid = {}
 
 for tile in data:
-    coord = [int(size/2), int(size/2)]
+    coord = [5, 5]
     step = ''
     for next_char in tile:
         step += next_char
@@ -70,22 +103,54 @@ for tile in data:
             elif step == 'se':
                 coord = move_se(coord)
             step = ''
-    #print("Tile coord: " + str(coord))
-    if grid[coord[0]][coord[1]] == 1:
-        grid[coord[0]][coord[1]] = 0
+    # print("Tile coord: " + str(coord) + "  " + str(grid[coord[0], coord[1]]))
+    if str(coord) in grid and grid[str(coord)] == 1:
+        grid[str(coord)] = 0
     else:
-        grid[coord[0]][coord[1]] = 1
+        grid[str(coord)] = 1
 
 count = 0
-for line in grid:
-    for pos in line:
-        #print(pos, end='')
-        if pos == 1:
-            count += 1
-    #print()
-
+# for pos in grid:
+#     print(pos + " " + str(grid[pos]), end=' : ')
+#     if grid[pos] == 1:
+#         count += 1
+print()
 print("Answer part 1: " + str(count))
 
+# Part 2
+size = 100
+for n in range(100):
+    next_grid = {}
+    for y in range(-size, size+1):
+        # if divmod(y,2)[1] == 1:
+        #     print(' ',end='')
+        for x in range(-size, size+1):
+            pos = str([x, y])
+            if pos in grid and grid[pos] == 1:
+                if neighbor_count(grid, pos) == 0 or neighbor_count(grid, pos) > 2:
+                    next_grid[pos] = 0
+                else:
+                     next_grid[pos] = 1
+                #print('# ', end='')
+                # print(neighbor_count(grid, pos), end=' ')
+                #else:
+                    # next_grid[pos] = 1
+            else:
+                if neighbor_count(grid, pos) == 2:
+                    next_grid[pos] = 1
+                #print('. ', end='')
+                #print(neighbor_count(grid, pos), end=' ')
+                # else:
+                #     next_grid[pos] = 0
+        # print(y)
+    grid = next_grid.copy()
 
+    count = 0
+    for pos in grid:
+        #print(pos + " " + str(grid[pos]) , end=' : ')
+        if grid[pos] == 1:
+            count += 1
+    # print()
+    # print("Day " + str(n+1) + " count: " + str(count))
 
-
+print("Answer part 2: " + str(count))
